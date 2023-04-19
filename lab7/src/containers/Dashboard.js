@@ -34,11 +34,6 @@ const Dashboard = () => {
     setSelectedPost(null);
   };
 
-  const onAddPost = (title, author) => {
-    const newPost = { id: postsState.length + 1, title, author };
-    setPosts([...postsState, newPost]);
-  };
-
   const onEditPost = (id, title, author) => {
     const updatedPosts = [...postsState];
     const postToUpdate = updatedPosts.find((post) => post.id === id);
@@ -55,7 +50,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Posts posts={postsState} onSelect={onPostSelected} />
+      <Posts posts={postsState} onPostClick={onPostSelected} />
       <div>
         {selectedPost && (
           <>
@@ -67,8 +62,8 @@ const Dashboard = () => {
               value={selectedPost.title}
               onChange={onChangeTitle}
             />
-            <button onClick={onSaveChanges}>Save Changes</button>
-            <button onClick={() => setSelectedPost(null)}>Cancel</button>
+            <br />
+            <button onClick={onSaveChanges}>Change Name</button>
           </>
         )}
       </div>
