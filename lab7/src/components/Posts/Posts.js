@@ -1,11 +1,12 @@
+import React from "react";
 import "./Posts.css";
 
 const Posts = ({ posts, onPostClick }) => {
   return (
-    <div className="Posts">
+    <div className="posts">
       <h2>Posts</h2>
       {posts.map((post) => (
-        <div className="post" key={post.id} onClick={() => onPostClick(post)}>
+        <div className="post" key={post.id} onClick={() => onPostClick(post.id)}>
           <p>Id:{post.id}</p>
           <p>Title:{post.title}</p>
           <p>Author: {post.author}</p>

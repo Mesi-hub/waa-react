@@ -1,22 +1,37 @@
-.PostDetails {
-    border: 1px solid black;
-    padding: 10px;
-    margin-bottom: 20px;
+.PostDetail {
+
+
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
-.PostDetails h2 {
-    margin-top: 0;
+.PostDetail h2 {
+  margin-top: 0;
 }
 
-.PostDetails p {
-    margin-top: 0;
+.PostDetail .Author {
+  font-style: italic;
+  margin-top: 10px;
 }
 
-.PostDetails .Author {
-    font-style: italic;
-    margin-top: 10px;
+.PostDetail .Actions {
+  margin-top: 20px;
 }
 
-.PostDetails .Actions {
-    margin-top: 10px;
+.PostDetail .Actions a {
+  color: #333;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.PostDetail .Actions a:hover {
+  text-decoration: underline;
+}
+
+.PostDetail {
+
+  padding: 10px;
+  /* add padding to create space between products */
+  margin-bottom: 20px;
+  /* add margin to create space between products */
 }
