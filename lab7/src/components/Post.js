@@ -1,8 +1,10 @@
-const Post = ({ post, onClick }) => {
+import React from "react";
+
+const Post = (props) => {
   return (
-    <div onClick={() => onClick(post)}>
-      <h3>{post.title}</h3>
-      <p>Author: {post.author}</p>
+    <div className="Post" onClick={() => props.onSelect(props.id)}>
+      <h3>{props.title}</h3>
+      <p>Author: {props.author}</p>
     </div>
   );
 };
