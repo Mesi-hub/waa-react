@@ -15,8 +15,13 @@ const PostDetails = (props) => {
       <p>{props.post.content}</p>
       <div className="Author">By: {props.post.author}</div>
       <div className="Actions">
-        <button onClick={handleEditClick}>Edit</button>
-        <button onClick={handleDeleteClick}>Delete</button>
+        <a href="#" onClick={handleEditClick}>
+          Edit
+        </a>{" "}
+        |{" "}
+        <a href="#" onClick={handleDeleteClick}>
+          Delete
+        </a>
       </div>
     </div>
   );

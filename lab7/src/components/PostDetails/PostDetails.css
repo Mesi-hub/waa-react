@@ -1,0 +1,22 @@
+.PostDetails {
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.PostDetails h2 {
+    margin-top: 0;
+}
+
+.PostDetails p {
+    margin-top: 0;
+}
+
+.PostDetails .Author {
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.PostDetails .Actions {
+    margin-top: 10px;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Posts from "../containers/Posts/Posts";
+import Posts from "../components/Posts/Posts";
 import PostDetails from "../components/PostDetails/PostDetails";
 
 const Dashboard = () => {
@@ -67,8 +67,7 @@ const Dashboard = () => {
               value={selectedPost.title}
               onChange={onChangeTitle}
             />
-            <br />
-            <button onClick={onSaveChanges}>Change Name</button>
+            <button onClick={onSaveChanges}>Save Changes</button>
             <button onClick={() => setSelectedPost(null)}>Cancel</button>
           </>
         )}
