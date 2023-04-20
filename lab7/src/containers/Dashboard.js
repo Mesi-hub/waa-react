@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Posts from './Posts';
-import './index.css';
-import NewPost from "./NewPost";
-import axios from 'axios';
+import Posts from '../components/Posts/Posts';
+import './Dashboard.css';
+import NewPost from "../components/NewPost/NewPost";
+import axios from 'react';
 
 // Initialize state for posts array, selected post, and updated title
 
@@ -97,18 +97,7 @@ const Dashboard = () => {
         });
   }
 
-  // Function to handle the delete button click
 
-  // const DeleteButton = () => {
-  //   console.log('Delete Button for post:', selectedPost);
-  //       // Filter the posts array to remove the selected post
-
-  //   const updatedPosts = posts.filter(post => post.id !== selectedPost.id);
-  //       // Update the posts array and selected post
-
-  //   setPosts(updatedPosts);
-  //   setSelectedPost(null);
-  // }
   const DeleteButton = () => {
     axios.delete(`http://localhost:8080/api/v1/posts/${selectedPost.id}`)
         .then(response => {
