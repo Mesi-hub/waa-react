@@ -3,7 +3,7 @@ import "./Posts.css";
 const Posts = ({ posts, onPostClick }) => {
   return (
       <div className="posts-container">
-        <h2>Posts</h2>
+    
         {posts.map(post => (
             <div className="post" key={post.id} onClick={() => onPostClick(post)}>
 

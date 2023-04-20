@@ -1,16 +1,17 @@
 import React from 'react';
+import './NewPost.css';
 
 const NewPost = ({ title, author, content, onChange, addButtonClicked }) => {
     return (
         <div>
-            <h2>Create a New Post</h2>
+            <h2>Add Post</h2>
             <form>
                 <div>
-                    <input type="text" name="title" placeholder="Title" value={title} onChange={onChange} />
+                    <input type="text" name="title"  value={title} onChange={onChange} />
                 </div>
 
                 <div>
-                    <input type="text" name="author" placeholder="Author" value={author} onChange={onChange} />
+                    <input type="text" name="author"  value={author} onChange={onChange} />
                 </div>
                 <div>
                     <textarea name="content" value={content} onChange={onChange} />
