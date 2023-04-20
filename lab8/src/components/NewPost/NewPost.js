@@ -1,5 +1,5 @@
 import React from 'react';
-import './NewPost.css';
+//import './NewPost.css';
 
 const NewPost = ({ title, author, content, onChange, addButtonClicked }) => {
     return (

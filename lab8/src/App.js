@@ -4,7 +4,7 @@ import Dashboard from "./containers/Dashboard";
 function App() {
   return (
     <div className="App">
-      <h1>Posts Page</h1>
+      <h1>Posts</h1>
       <Dashboard />
     </div>
   );
