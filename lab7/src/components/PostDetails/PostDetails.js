@@ -1,28 +1,21 @@
-import React from "react";
-import "./PostDetails.css";
-const PostDetails = (props) => {
-  const handleEditClick = () => {
-    props.onEditClick(props.post.id);
-  };
-
-  const handleDeleteClick = () => {
-    props.onDeleteClick(props.post.id);
-  };
-
+import React from 'react';
+const [postState, setPostState] = useState({
+  title: "",
+  author: "",
+  content:""
+});
+const PostDetails = ({ selectedPost, onEditClick, onDeleteClick }) => {
   return (
-    <div className="PostDetail">
-      <h2>{props.post.title}</h2>
-      <p>{props.post.content}</p>
-      <div className="Author"> {props.post.author}</div>
-      <div className="Actions">
-        <a href="#" onClick={handleEditClick} className="Edit">
-          Edit
-        </a>{" "}
-        <a href="#" onClick={handleDeleteClick} className="Delete">
-          Delete
-        </a>
+      <div className="post-details">
+        <h2>Post Details</h2>
+        <h3>
+          <u>{selectedPost.title}</u>
+        </h3>
+        <p>Author: {selectedPost.author}</p>
+        <p>Content: {selectedPost.content}</p>
+        <button onClick={onEditClick}>Edit</button>
+        <button onClick={onDeleteClick}>Delete</button>
       </div>
-    </div>
   );
 };
 
