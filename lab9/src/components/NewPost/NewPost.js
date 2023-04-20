@@ -1,25 +1,48 @@
-import React from 'react';
-//import './NewPost.css';
+import React, { useRef } from "react";
 
-const NewPost = ({ title, author, content, onChange, addButtonClicked }) => {
-    return (
-        <div>
-            <h2>Add Post</h2>
-            <form>
-                <div>
-                    <input type="text" name="title"  value={title} onChange={onChange} />
-                </div>
+import "./AddPost.css";
 
-                <div>
-                    <input type="text" name="author"  value={author} onChange={onChange} />
-                </div>
-                <div>
-                    <textarea name="content" value={content} onChange={onChange} />
-                </div>
+const AddPost = (props) => {
+  const addPostFormRef = useRef();
 
-                <button type="button" onClick={addButtonClicked}>Add Post</button>
-            </form>
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    let formData = addPostFormRef.current;
+
+    let newData = {
+      author: formData["author"].value,
+      title: formData["title"].value,
+      content: formData["content"].value,
+    };
+
+    props.addPost(newData);
+  }
+
+  return (
+    <div>
+      <form ref={addPostFormRef} onSubmit={handleSubmit}>
+        <div className="div-form">
+          <label>Title: </label>
+          <input type="text" name={"title"} />
         </div>
-    );
-}
-export default NewPost;
+
+        <div className="div-form">
+          <label>Content: </label>
+          <textarea name={"content"} />
+        </div>
+
+        <div className="div-form">
+          <label>Author: </label>
+          <input type="text" name={"author"} />
+        </div>
+
+        <div className="div-form">
+          <button>Submit</button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default AddPost;

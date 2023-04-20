@@ -1,18 +1,21 @@
+import React from "react";
+import Post from "../Post/Post";
 
-import "./Posts.css";
-const Posts = ({ posts, onPostClick }) => {
+const Posts = ({ data, postClicked }) => {
   return (
-      <div className="posts-container">
-    
-        {posts.map(post => (
-            <div className="post" key={post.id} onClick={() => onPostClick(post)}>
-
-              <p>Id:{post.id}</p>
-              <p>Title:{post.title}</p>
-              <p>Author: {post.author}</p>
-            </div>
-        ))}
-      </div>
+    <div>
+      {data.map((post) => {
+        return (
+          <Post
+            postClicked={postClicked}
+            id={post.id}
+            title={post.title}
+            author={post.author}
+            key={post.id}
+          />
+        );
+      })}
+    </div>
   );
 };
 

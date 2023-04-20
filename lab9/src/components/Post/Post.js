@@ -1,10 +1,19 @@
-const Post = ({ post, onClick }) => {
-  return (
-    <div onClick={() => onClick(post)}>
-      <h3>{post.title}</h3>
-      <p>Author: {post.author}</p>
-    </div>
-  );
-};
+import React,{ useContext } from "react";
+import "./Post.css";
+import { FetchPostContext } from "../../pages/Dashboard";
+
+const Post = (props)=>{
+    const idFunctionContext = useContext(FetchPostContext);
+    return(
+        <div 
+            className="post"
+            onClick={() => idFunctionContext(props.id)}
+        >
+            <p>Id: {props.id}</p>
+            <p>Title: {props.title}</p>
+            <p>Author: {props.author}</p>
+        </div>
+    );
+}
 
 export default Post;

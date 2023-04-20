@@ -1,153 +1,92 @@
-import React, { useEffect, useState } from "react";
-import Posts from "../components/Posts/Posts";
-import NewPost from "../components/NewPost/NewPost";
 import axios from "axios";
+import React, { useEffect, useState, useRef } from "react";
+import AddPost from "../components/AddPost/AddPost";
+import PostDetails from "../components/PostDetails/PostDetails";
+import Posts from "../components/Posts/Posts";
 
+export const FetchPostContext = React.createContext();
+function Dashboard() {
+  const [title, setTitle] = useState("");
 
-const Dashboard = () => {
-  const [posts, setPosts] = useState([
-    //   { id: 111, title: 'Happiness', author: 'John', content: 'This is the content in the post...' },
-    //  { id: 112, title: 'MIU', author: 'Dean', content: 'This is the content in the post...' },
-    //  { id: 113, title: 'Enjoy Life', author: 'Jasmine', content: 'This is the content in the post...' }
-  ]);
-  const [selectedPost, setSelectedPost] = useState(null);
-  const [updatedTitle, setUpdatedTitle] = useState("");
-  const [nextId, setNextId] = useState(114);
-  const [postState, setPostState] = useState({
-    title: "",
-    author: "",
-    content: "",
-  });
-  const fetchData = () => {
-    axios
-      .get("http://localhost:8080/api/v1/posts")
-      .then((response) => {
-        setPosts(response.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+  const [postData, setPostData] = useState([]);
+
+  const [postDetails, setPostDetails] = useState("");
+
+  const [postId, setPostId] = useState(0);
+
+  const [trackDeleteBtn, setTrackDeleteBtn] = useState(false);
+
+  const titleForm = useRef();
 
   useEffect(() => {
+    function fetchData() {
+      axios
+        .get("http://localhost:8080/api/v1/posts")
+        .then((response) => setPostData(response.data))
+        .catch(new Error());
+    }
     fetchData();
-  }, []);
+  }, [trackDeleteBtn]);
 
-  const onChange = (event) => {
-    const copy = { ...postState };
-    copy[event.target.name] = event.target.value;
-    setPostState(copy);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const form = titleForm.current;
+
+    const dataForm = {
+      title: form["title"].value,
+    };
+
+    const copy = [...postData];
+
+    copy[0].title = dataForm.title === "" ? "Happiness" : dataForm.title;
+
+    setPostData(copy);
+    setTitle("");
   };
 
-  const addButtonClicked = () => {
-    const copy = { ...postState };
-    copy.id = nextId;
-    setNextId(nextId + 1);
-    axios
-      .post("http://localhost:8080/api/v1/posts", copy)
-      .then((response) => {
-        setPosts([...posts, response.data]);
-        setPostState({ title: "", author: "", content: "" });
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+  const postClicked = (id) => {
+    let details = postData.filter((post) => post.id === id);
+    setPostId(id);
+    setPostDetails(details);
   };
 
-  const PostClick = (post) => {
-    setSelectedPost(post);
-  };
- 
-  const updatePostTitle = () => {
-   
-
-    const updatedPosts = posts.map((post) => {
-      if (post.id === selectedPost.id) {
-        return { ...post, title: updatedTitle };
-      }
-      return post;
+  function deletePostById() {
+    axios.delete(`http://localhost:8080/api/v1/posts/${postId}`).then(() => {
+      setTrackDeleteBtn(!trackDeleteBtn);
+      setPostDetails([]);
     });
+  }
 
-
-    setPosts(updatedPosts);
-    setSelectedPost({ ...selectedPost, title: updatedTitle });
-  };
-
-  const editPostBtn = () => {
-    console.log("Edit Button for post:", selectedPost);
+  function addPost(post) {
+    // axios.post(`localhost:8080/api/v1/users/${id}/posts`);
     axios
-      .put(
-        `http://localhost:8080/api/v1/posts/${selectedPost.id}`,
-        selectedPost
-      )
-      .then((response) => {
-        const updatedPosts = posts.map((post) => {
-          if (post.id === selectedPost.id) {
-            return response.data;
-          }
-          return post;
-        });
-        setPosts(updatedPosts);
-        setSelectedPost(response.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  const deletePostBtn = () => {
-    axios
-      .delete(`http://localhost:8080/api/v1/posts/${selectedPost.id}`)
-      .then((response) => {
-        const updatedPosts = posts.filter(
-          (post) => post.id !== selectedPost.id
-        );
-        setPosts(updatedPosts);
-        setSelectedPost(null);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
- 
+      .post(`http://localhost:8080/api/v1/users/1/posts`, post)
+      .then(() => setTrackDeleteBtn(!trackDeleteBtn));
+  }
 
   return (
-    <div className="container">
-      <Posts
-        posts={posts}
-        onPostClick={PostClick}
-        updatedTitle={updatedTitle}
-      />
-      {selectedPost && (
-        <div className="post-details">
-          <h2>Post Details</h2>
-          <h3>
-            <u>{selectedPost.title}</u>
-          </h3>
-          <p>Author: {selectedPost.author}</p>
-          <p>Content: {selectedPost.content}</p>
-          <button onClick={editPostBtn}>Edit</button>
-          <button onClick={deletePostBtn}>Delete</button>
-        </div>
-      )}
-      <div className="newPost">
-        <NewPost
-          title={postState.title}
-          author={postState.author}
-          content={postState.content}
-          onChange={onChange}
-          addButtonClicked={addButtonClicked}
+    // <div>
+    <FetchPostContext.Provider value={postClicked}>
+      <Posts data={postData} />
+
+      <form ref={titleForm} onSubmit={handleSubmit}>
+        <input type="text" label={"title"} name={"title"} />
+        <button>Change Name</button>
+      </form>
+
+      <div>
+        <PostDetails
+          postDetails={postDetails}
+          deletePostById={deletePostById}
         />
       </div>
 
-      <input
-        type="text"
-        value={updatedTitle}
-        onChange={(e) => setUpdatedTitle(e.target.value)}
-      />
-      <button onClick={updatePostTitle}>Change Name</button>
-    </div>
+      <div>
+        <AddPost addPost={addPost} />
+      </div>
+    </FetchPostContext.Provider>
   );
-};
+}
 
 export default Dashboard;
