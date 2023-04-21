@@ -1,21 +1,16 @@
-import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import AddPost from "../components/AddPost/AddPost";
 import PostDetails from "../components/PostDetails/PostDetails";
 import Posts from "../components/Posts/Posts";
+import axios from "axios";
 
 export const FetchPostContext = React.createContext();
+
 function Dashboard() {
-  const [title, setTitle] = useState("");
-
   const [postData, setPostData] = useState([]);
-
   const [postDetails, setPostDetails] = useState("");
-
   const [postId, setPostId] = useState(0);
-
   const [trackDeleteBtn, setTrackDeleteBtn] = useState(false);
-
   const titleForm = useRef();
 
   useEffect(() => {
@@ -23,7 +18,9 @@ function Dashboard() {
       axios
         .get("http://localhost:8080/api/v1/posts")
         .then((response) => setPostData(response.data))
-        .catch(new Error());
+        .catch((error) => {
+          console.log("Failed to fetch posts");
+        });
     }
     fetchData();
   }, [trackDeleteBtn]);
@@ -34,7 +31,10 @@ function Dashboard() {
     const form = titleForm.current;
 
     const dataForm = {
+      id: form["id"].value,
       title: form["title"].value,
+      content: form["content"].value,
+      author: form["author"].value,
     };
 
     const copy = [...postData];
@@ -42,7 +42,6 @@ function Dashboard() {
     copy[0].title = dataForm.title === "" ? "Happiness" : dataForm.title;
 
     setPostData(copy);
-    setTitle("");
   };
 
   const postClicked = (id) => {
@@ -58,15 +57,18 @@ function Dashboard() {
     });
   }
 
-  function addPost(post) {
-    // axios.post(`localhost:8080/api/v1/users/${id}/posts`);
+  function newPost(post) {
     axios
-      .post(`http://localhost:8080/api/v1/users/1/posts`, post)
-      .then(() => setTrackDeleteBtn(!trackDeleteBtn));
+      .post("http://localhost:8080/api/v1/posts", post)
+      .then(() => {
+        setTrackDeleteBtn(!trackDeleteBtn);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 
   return (
-    // <div>
     <FetchPostContext.Provider value={postClicked}>
       <Posts data={postData} />
 
@@ -83,7 +85,7 @@ function Dashboard() {
       </div>
 
       <div>
-        <AddPost addPost={addPost} />
+        <AddPost addPost={newPost} />
       </div>
     </FetchPostContext.Provider>
   );

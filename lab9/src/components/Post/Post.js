@@ -1,6 +1,6 @@
 import React,{ useContext } from "react";
 import "./Post.css";
-import { FetchPostContext } from "../../pages/Dashboard";
+import { FetchPostContext } from "../../containers/Dashboard";
 
 const Post = (props)=>{
     const idFunctionContext = useContext(FetchPostContext);
