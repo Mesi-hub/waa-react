@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import AddPost from "../components/AddPost/AddPost";
-import PostDetails from "../components/PostDetails/PostDetails";
-import Posts from "../components/Posts/Posts";
+import AddPost from "../AddPost/AddPost";
+import PostDetails from "../PostDetails/PostDetails";
+import Posts from "../Posts/Posts";
 import axios from "axios";
 
 export const FetchPostContext = React.createContext();
