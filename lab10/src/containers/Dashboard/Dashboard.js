@@ -58,8 +58,7 @@ function Dashboard() {
   }
 
   function newPost(post) {
-    axios
-      .post("http://localhost:8080/api/v1/posts", post)
+    axios.post("http://localhost:8080/api/v1/posts", post)
       .then(() => {
         setTrackDeleteBtn(!trackDeleteBtn);
       })
