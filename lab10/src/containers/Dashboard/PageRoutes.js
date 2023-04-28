@@ -1,6 +1,5 @@
 import { Route, Routes, Navigate } from "react-router";
-import Students from "../../components/Student/Students";
-import StudentDetails from "../../components/StudentDetails";
+import PostDetails from "../../components/PostDetails/PostDetails"
 import AddPost from "../../components/AddPost/AddPost";
 import Posts from "../../components/Posts/Posts"
 
