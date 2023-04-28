@@ -12,7 +12,7 @@ export default function PageRoutes(props) {
             {/* Put your page routes here...  */}
             <Route path="posts" element={<Posts />} />
             <Route path="add-post" element={<AddPost />} />
-            {/* <Route path="students/:id" element={<StudentDetails />} /> */}
+            <Route path="posts/:id" element={<PostDetails />} />
         </Routes>
     );
 }
