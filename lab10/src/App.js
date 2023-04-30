@@ -1,11 +1,17 @@
 import "./App.css";
-import Dashboard from "./containers/Dashboard";
+import { BrowserRouter } from 'react-router-dom';
+import Dashboard from "./containers/Dashboard/Dashboard";
+
+
 
 function App() {
   return (
+
     <div className="App">
-      <h1>Posts</h1>
-      <Dashboard />
+      <BrowserRouter>
+        <h1>Posts</h1>
+        <Dashboard />
+      </BrowserRouter>
     </div>
   );
 }

@@ -1,83 +1,36 @@
-
-.post-details {
-    width: 400px;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #f0f0f0;
-    box-shadow: 0px 0px 3px rgba(146, 115, 115, 0.3);
+.ProductDetail {
+    width: 80%;
+    margin: 20px auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    text-align: center;
 }
 
-.post-details:hover {
-    background-color: #a4d11b;
-}
+.Edit {}
 
-.post-details h2 {
-    margin-top: 5px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 16px;
-}
-
-.button-container button {
-    margin-right: 8px;
-}
-
-.posts-container {
-    display: flex;
-    justify-content: center;
-}
-
-.post {
-    margin: 0 10px;
-    padding: 10px;
-    border: 1px solid #000;
-    cursor: pointer;
-}
-
-
-.post:hover {
-    background-color: #FFA07A;
-}
-
-.Content {
-    margin: 20px;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.Content h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.Content label {
+.Edit label {
     display: block;
-    font-size: 16px;
-    margin-bottom: 5px;
+    color: grey;
 }
 
-.Content input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.Content button {
-    padding: 10px 20px;
-    background-color: #f200ff;
-    color: #fff;
+.Edit button {
     border: none;
-    border-radius: 5px;
+    background-color: transparent;
     cursor: pointer;
+    outline: none;
+    color: #fa923f;
 }
 
-.Content button:hover {
-    background-color: #d900c0;
+.Edit button:hover,
+.Edit button:active {
+    color: #521751;
+}
+
+.Edit button.Delete {
+    color: red;
+}
+
+.Edit button.Delete:hover,
+.Edit button.Delete:active {
+    color: darkred;
 }

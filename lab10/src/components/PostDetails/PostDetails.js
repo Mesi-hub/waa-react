@@ -1,73 +1,82 @@
-import React from "react";
-import "./PostDetails.css";
-import Comment from "../Comments/Comments";
-import Post from "../Post/Post";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import Comment from '../Comment/Comment';
 
-const PostDetails = (props) => {
-
-  const params = useParams(); //:id
+const PostDetails = () => {
+  const params = useParams(); // :id
   const navigate = useNavigate();
 
-  const [postDetail, setPostDetail] = useState();
+  const [postDetail, setPostDetail] = useState({});
+  const [comments, setComments] = useState([]);
+
 
   useEffect(() => {
+    if (params.id) {
+      axios
+        .get(`http://localhost:8080/api/v1/posts/${params.id}`)
+        .then((res) => {
+          setPostDetail(res.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  }, [params.id]);
 
-    axios.get('http://localhost:8080/api/v1/posts/' + params.id)
-      .then((res) => {
-        setPostDetail(res.data)
-      }).catch((err) => {
-        console.log(err.message)
-      });
+  useEffect(() => {
+    if (params.id) {
+      axios
+        .get(`http://localhost:8080/api/v1/posts/${params.id}/comments`)
+        .then((res) => {
+          setComments(res.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  }, [params.id]);
 
-
-  }, [params.id])
 
   const deleteButton = (id) => {
-    axios.delete('http://localhost:8080/api/v1/posts/' + id) //params.id
+    axios
+      .delete(`http://localhost:8080/api/v1/posts/${id}`)
       .then((res) => {
-        navigate('/posts') // 
-      }).catch((err) => {
-        console.log(err)
+        navigate('/posts');
+      })
+      .catch((err) => {
+        console.log(err);
       });
-  }
+  };
 
-  let postDetailsDisplay = null;
-  if (params.id && postDetail) {
+  let postDetailDisplay = null;
 
-    postDetailsDisplay = (
-      <div className="ProductDetail">
-        <div >
-          {/* <div>
-                    <h3> Student Info </h3>
-                </div>
-                Name: {postDetail.name}<br />
-                ID: {postDetail.id}
-                <div >
-                    GPA: {postDetail.gpa}
-                    <br />
-                </div> */}
-
-          <div>
-            {postDetail.courseList == null ? "Term status: inactive" : "Courses"}
-
-            {postDetail.courseList ? postDetail.courseList.map(p => {
-              return <Post pId={p.id} key={p.id} title={p.title} author={p.title} />
-            }) : null}
-          </div>
-
-          <div>
-            {/* <button onClick={deleteButton}>Delete</button> */}
-            <button onClick={() => { deleteButton(params.id) }}>Delete</button>
-            <button>Follow/Unfollow</button>
-            <button onClick={() => {
-              navigate("/posts")
-            }}>Back</button>
-          </div>
-
-
+  postDetailDisplay = (
+    <div className="ProductDetail">
+      <div>
+        <div>
+          <h3>Post Info</h3>
         </div>
-      </div>)
-  }
-  return postDetailsDisplay;
-}
+        Title: {postDetail.title}
+        <br />
+        Author: {postDetail.author}
+        <br />
+        Content: {postDetail.content}
+        <br />
+        {comments.length > 0 ? 'Comments' : 'No comments'}
+        {comments.map((comment) => (
+          <Comment id={comment.id} key={comment.id} content={comment.content} />
+        ))}
+        <br />
+        <div>
+          <button onClick={() => deleteButton(params.id)}>Delete</button>
+          <button onClick={() => navigate('/posts')}>Back</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  return postDetailDisplay;
+};
+
 export default PostDetails;
